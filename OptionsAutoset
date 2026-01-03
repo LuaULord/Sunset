@@ -1,1 +1,9 @@
---not here yet
+--if there will be any chances in automatic options, you will need to change them yourself by adding them from there or just removing file.
+
+return {
+Input_UIOpen=Enum.KeyCode.LeftControl, --Input For Toggling UI Visibility On Having Keyboard.
+SafeMode=true, --On true makes errors not appear in roblox console master
+RunWC=false, --On true, makes script run without: installing stuff, checks on environment.
+                   --(its not recommended to turn on, unless testing something and newest version doesnt work for you)
+
+}
