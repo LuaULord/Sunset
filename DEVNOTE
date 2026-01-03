@@ -1,0 +1,101 @@
+*Read me before trying to develop stuff using this library, the script requires proper installation to work fully.
+
+*Ill try to explain how the script works & how to use it for projects
+
+*The meanings of all files
+
+- coloring = file that is made for changing colors in UI
+
+- version = file to get current version, letters meanings: 
+     - A = Alpha
+     - B = Beta
+     - T = Testing
+- userinput = file that manages main UI
+
+- libs = folder that used for listing libraries in UI that you can use to load stuff
+
+*The way to create your library to run, install something:
+
+----------------------------------------------------------
+
+--this is tutorial for creating library, for sunset script
+
+--so lets begin with creating test to make sure, script is running in state we want.
+--the state means, mode executor run in.
+
+--[==[
+There are 3 states in sunset script,
+  0 - failed mode, and resources/assets isnt installed,
+  1 - normal mode, where all required stuff is installed,
+  2 - safe mode, this mode is used for testing stuff and mostly 
+      maded for developers, ill explain what it is later.
+  ]==]
+
+--making sure the enviroment is fully loaded.
+if __SS_State and __SS_State ~= 0 then return end
+
+
+--Creating New Unregistered Library
+local mod=__SS_CreateLib("Test") -- -> table
+
+--Now ill explain what each index in table do
+--[==[
+   __unloaded - expected to be function, that runs on unloading library
+                from sunset
+                ARGUMENTS: void
+  
+  __loadup    - expected to be table with functions, that import on 
+                load of library
+  
+  __on_response - expected to be function, that activate on any type of
+                  response for example [[error,warn,print]]
+                  if is not set, all responses will log into sunset console
+                  ARGUMENTS: string
+  
+  __on_register - expected to be function, that will run on :Register() 
+                  function inside library
+                  ARGUMENTS: void
+  
+  ]==]
+
+  --heres example of an command:
+
+   local list={apple = { function(arguments:{string}) 
+     local message="Heres " 
+      if arguments[1] then
+         message..="Apple"
+        else
+         message..="Pumpkin Pie"
+      end
+      print(message)
+   end,
+      description="Prints Some Food Name!", sh_args=false,argsexp=0   
+                        
+                       }
+               
+  -- sh_args - should command have arguments or not, if its arguments
+  --           are not totally equal as expected
+
+  -- argsexp - expected arguments used on running commands, if equal to 
+  --           zero then it will dont have limit, although there 
+  --           is exception, that if sh_args turned on, it will expect
+  --           to be zero arguments used
+
+  --description - the description that will pop up on index of commands
+
+
+  mod.__on_register=function()
+     print("Its working!")
+  end
+               
+  -- Registers Library, allowing its commands to run
+  mod:Register() -- logs into console "Its working!"
+
+  --we can also create log in sunset ui
+  __SS_Log(unpack({
+    "-", -- header, and only one byte is allowed to use
+    "Hello Sunset!", -- description
+    Color3.fromRGB(255,255,255) -- textcolor3,
+    })
+  
+----------------------------------------------------------
