@@ -69,7 +69,7 @@ local mod=__SS_CreateLib("Test") -- -> table
       end
       print(message)
    end,
-      description="Prints Some Food Name!", sh_args=false,argsexp=0   
+      description="Prints Some Food Name!", sh_args=false, argsexp=0   
                         
                        }
                
@@ -83,6 +83,17 @@ local mod=__SS_CreateLib("Test") -- -> table
 
   --description - the description that will pop up on index of commands
 
+  print(__FOLDER) -- logs the folder path, which can be used to 
+  --                 run more stuff in folder
+
+  --Returns user info table if player is not on server,
+  --Or if he is, will return it
+  print(__SS_GetUserByInfo("Roblox").UserId)
+  --or
+  print(__SS_GetUserByInfo(1).UserId)
+  --or if we use as finding player path by short name
+  local lplr=game.Players.LocalPlayer
+  print(__SS_GetUserByInfo((lplr.DisplayName or lplr.Name):sub(5)).Name)
 
   mod.__on_register=function()
      print("Its working!")
@@ -99,3 +110,33 @@ local mod=__SS_CreateLib("Test") -- -> table
     })
   
 ----------------------------------------------------------
+
+
+-----------------------------------
+*Now when i explained all stuff that add on sunset script run
+i can show how to run them correctly
+
+Lets create folder, with name of whatever we want.
+My will be named "Apples"
+now when we created folder, we need to create file named "main.luau"
+after that we have the file, which will be ran, and other stuff that
+you wrote should be in it, since if library will be loaded, this file 
+would be ran firstly.
+
+*Now if you wanna add it to "libs" folder, you can test it faster 
+by just putting the folder in executor workspace, then running this:
+
+---------------------------------
+local folder_path="Apples" --This path will be used in environment
+--of main.luau as "__FOLDER"
+
+--Runs folders "main.luau"
+__SS_Run(folder_path)
+---------------------------------
+
+there are reason to use method i showed above instead of 
+putting file in libs, its because of sunset wouldn't 
+accept any folders that are used to be in list more than
+one time.
+
+----------------------------------
